@@ -1,19 +1,18 @@
 import React from 'react'
 import axios from 'axios';
-import { Paper, TextField, Link, Button } from '@mui/material';
+import { Paper, TextField, Button } from '@mui/material';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import './Reg.css'
+import { Link } from "react-router-dom";
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { addForm } from '../../Actions/UserAction'
 
 import { ToastContainer, toast } from 'react-toastify'
 import 'material-react-toastify/dist/ReactToastify.css';
+
 function Reg() {
     const dispatch = useDispatch();
-
-
-    // const notify = () =>
 
     const validationSchema = yup.object({
         name: yup.string()
@@ -34,7 +33,7 @@ function Reg() {
 
             dispatch(addForm(values));
             
-            const res = await axios.post('http://localhost:5000/api/addUser', {
+           await axios.post('http://localhost:5000/api/addUser', {
                 fname: values.name,
                 lname: values.lastname,
                 email: values.email,
@@ -61,7 +60,7 @@ function Reg() {
                 onSubmit={hasFormSubmit} >
 
                 <div className=' main-container-reg'>
-                    <div className="container-fluid d-flex justify-content-center mt-5">
+                    <div className="container-fluid d-flex justify-content-center reg-main-form">
                         <Paper elevation={2} sx={{ width: '30%' }}  >
                             <Form action="" className='main-form-div'>
                                 <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
@@ -84,7 +83,7 @@ function Reg() {
 
                                     <Button variant="contained" color="primary" type="submit" >Register</Button>
                                     <ToastContainer />
-                                    <p className=''>Already have an account? <span><Link href="#">Login In</Link></span></p>
+                                    <p className=''>Already have an account? <span><Link to="/login">Login In</Link></span></p>
                                   
                                 </div>
                             </Form>

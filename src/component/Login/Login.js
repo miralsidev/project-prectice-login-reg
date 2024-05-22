@@ -1,53 +1,86 @@
-// import React from 'react'
-// import axios from 'axios';
-// import { Paper, TextField, Link, Button } from '@mui/material';
-// import { Formik, Field, Form, ErrorMessage } from 'formik';
+import React from 'react'
+import axios from 'axios';
+import { Paper, TextField, Button } from '@mui/material';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as yup from 'yup';
+import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import './Login.css'
 
-// function Login() {
-//     return (
+import { loginForm } from '../../Actions/UserAction'
 
+import { ToastContainer, toast } from 'react-toastify'
+import 'material-react-toastify/dist/ReactToastify.css';
 
-//         <>
-//             <Formik validationSchema={validationSchema} initialValues={{
-//                 name: '',
-//                 lastname: '',
-//                 email: '',
-//                 password: '',
-//             }}
-//                 onSubmit={hasFormSubmit} >
+function Login() {
+    const dispatch = useDispatch();
 
-//                 <div className=' main-container-reg'>
-//                     <div className="container-fluid d-flex justify-content-center mt-5">
-//                         <Paper elevation={2} sx={{ width: '30%' }}  >
-//                             <Form action="" className='main-form-div'>
-//                                 <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
-//                                     <p className='text-center fs-3'>Register Account Form</p>
-//                                     <Field as={TextField} name="name" label="First Name" sx={{ marginBottom: '5px' }} xs={3} />
-//                                     {/*  */}
-//                                     <ErrorMessage name='name' />
+    // const notify = () =>
+    const validationSchema = yup.object({
 
-//                                     <Field as={TextField} name="lastname" label="Last Name" sx={{ marginBottom: '5px' }} />
+        email: yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
+        password: yup.string()
+            .min(6, 'Password must be at least 6 characters')
+            .required('Password is required'),
+    });
 
-//                                     <ErrorMessage name='lastname' />
+    const hasFormSubmit = async (values, { resetForm }) => {
+        try {
+            console.log("Form data=", values);
+            dispatch(loginForm(values));
+            const response = await axios.post('http://localhost:5000/api/login', {
+                email: values.email,
+                password: values.password
+            });
+            localStorage.setItem('token', response.data.token);
+            notify()
+            resetForm();
+            // alert(res.data);
+        } catch (error) {
+            console.error('There was an error submitting the form!', error);
+        }
+    }
+    function notify() {
+        toast.success('Login Succesfully..!');
+    }
+    return (
+        <>
+            <Formik validationSchema={validationSchema} initialValues={{
 
-//                                     <Field as={TextField} name="email" label="Email Id" sx={{ marginBottom: '5px' }} />
+                email: '',
+                password: '',
+            }}
+                onSubmit={hasFormSubmit} >
 
-//                                     <ErrorMessage name='email' />
+                <div className=' main-container-reg'>
+                    <div className="container-fluid d-flex justify-content-center login-form-main">
+                        <Paper elevation={2} sx={{ width: '30%' }}  >
+                            <Form action="" className='main-form-div'>
+                                <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
+                                    <p className='text-center fs-3'>Login Form</p>
 
-//                                     <Field as={TextField} name="password" label="Password" sx={{ marginBottom: '5px' }} />
+                                    <Field as={TextField} name="email" label="Email Id" sx={{ marginBottom: '5px' }} />
 
-//                                     <ErrorMessage name='password' />
+                                    <ErrorMessage name='email' />
 
-//                                     <Button variant="contained" color="primary" type="submit">Register</Button>
-//                                     <p className=''>Already have an account? <span><Link href="#">Login In</Link></span></p>
-//                                 </div>
-//                             </Form>
-//                         </Paper>
-//                     </div>
-//                 </div>
-//             </Formik>
-//         </>
-//     )
-// }
+                                    <Field as={TextField} name="password" label="Password" sx={{ marginBottom: '5px' }} />
 
-// export default Login
+                                    <ErrorMessage name='password' />
+
+                                    <Button variant="contained" color="primary" type="submit" >Login</Button>
+                                    <ToastContainer />
+                                    <p className=''>Don't have an account? <span><Link to="/">Register Here</Link></span></p>
+
+                                </div>
+                            </Form>
+                        </Paper>
+                    </div>
+                </div>
+            </Formik>
+        </>
+    )
+}
+
+export default Login
