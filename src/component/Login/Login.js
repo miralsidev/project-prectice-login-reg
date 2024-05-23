@@ -1,21 +1,16 @@
 import React from 'react'
-import axios from 'axios';
+
 import { Paper, TextField, Button } from '@mui/material';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { LoginServices } from '../../Servicer/Registration';
 import * as yup from 'yup';
-import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
 import './Login.css'
-
-import { loginForm } from '../../Actions/UserAction'
 
 import { ToastContainer, toast } from 'react-toastify'
 import 'material-react-toastify/dist/ReactToastify.css';
-
 function Login() {
-    const dispatch = useDispatch();
 
-    // const notify = () =>
     const validationSchema = yup.object({
 
         email: yup.string()
@@ -25,30 +20,28 @@ function Login() {
             .min(6, 'Password must be at least 6 characters')
             .required('Password is required'),
     });
-
-    const hasFormSubmit = async (values, { resetForm }) => {
+    const navigate = useNavigate()
+    const hasFormSubmit = async (values) => {
         try {
-            console.log("Form data=", values);
-            dispatch(loginForm(values));
-            const response = await axios.post('http://localhost:5000/api/login', {
+
+            const response = await LoginServices({
                 email: values.email,
                 password: values.password
-            });
+            })
             localStorage.setItem('token', response.data.token);
-            notify()
-            resetForm();
-            // alert(res.data);
+            notify(() => navigate('/Home'));
         } catch (error) {
             console.error('There was an error submitting the form!', error);
         }
     }
-    function notify() {
-        toast.success('Login Succesfully..!');
+    function notify(callback) {
+        toast.success('Login Succesfully..!', { onClose: callback })
+
     }
+
     return (
         <>
             <Formik validationSchema={validationSchema} initialValues={{
-
                 email: '',
                 password: '',
             }}
@@ -71,7 +64,11 @@ function Login() {
 
                                     <Button variant="contained" color="primary" type="submit" >Login</Button>
                                     <ToastContainer />
-                                    <p className=''>Don't have an account? <span><Link to="/">Register Here</Link></span></p>
+                                    <div className='d-flex justify-content-end'>
+                                        <span className='forgot-link'><Link to="/ForgotPasswordForm" className='text-decoration-none'>Forgot Password?</Link></span>
+                                    </div>
+
+                                    <p className=''>Don't have an account? <span><Link to="/" className='text-decoration-none'>Register Here</Link></span></p>
 
                                 </div>
                             </Form>

@@ -1,12 +1,22 @@
-import React from 'react'
-import  {RegistrationServices}  from '../../Servicer/Registration';
+import axios from 'axios';
+
+const api = axios.create({
+    baseURL: 'http://localhost:5000/api',
+});
+
+export const addUser = (userData) => {
+    return api.post('/addUser', userData);
+};
+
+import React from 'react';
 import { Paper, TextField, Button } from '@mui/material';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import './Reg.css'
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
+import { addUser } from './services/api';  // Import the addUser function from the services folder
+import './Reg.css';
 
 function Reg() {
     const validationSchema = yup.object({
@@ -21,20 +31,20 @@ function Reg() {
             .min(6, 'Password must be at least 6 characters')
             .required('Password is required'),
     });
-    const navigate = useNavigate()
+
+    const navigate = useNavigate();
+
     const hasFormSubmit = async (values, { resetForm }) => {
         try {
             console.log("Form data=", values);
-            await RegistrationServices({
+            await addUser({
                 fname: values.name,
-                    lname: values.lastname,
-                    email: values.email,
-                    password: values.password
-            })
-
+                lname: values.lastname,
+                email: values.email,
+                password: values.password
+            });
             resetForm();
             navigate('/login');
-
         } catch (error) {
             if (error.response) {
                 const status = error.response.status;
@@ -42,8 +52,7 @@ function Reg() {
 
                 if (status === 400) {
                     toast.error(message || 'User already exists.');
-                }
-                else if (status === 500) {
+                } else if (status === 500) {
                     toast.error(message || 'Internal server error.');
                 } else {
                     toast.error('An unexpected error occurred.');
@@ -51,42 +60,37 @@ function Reg() {
             }
             console.error('There was an error submitting the form!', error);
         }
-    }
+    };
+
     return (
         <>
-            <Formik validationSchema={validationSchema} initialValues={{
-                name: '',
-                lastname: '',
-                email: '',
-                password: '',
-            }}
-                onSubmit={hasFormSubmit} >
-
-                <div className=' main-container-reg'>
+            <Formik 
+                validationSchema={validationSchema} 
+                initialValues={{
+                    name: '',
+                    lastname: '',
+                    email: '',
+                    password: '',
+                }}
+                onSubmit={hasFormSubmit} 
+            >
+                <div className='main-container-reg'>
                     <div className="container-fluid d-flex justify-content-center reg-main-form">
-                        <Paper elevation={2} sx={{ width: '30%' }}  >
+                        <Paper elevation={2} sx={{ width: '30%' }}>
                             <Form action="" className='main-form-div'>
                                 <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
                                     <p className='text-center fs-3'>Register Account Form</p>
-                                    <Field as={TextField} name="name" label="First Name" sx={{ marginBottom: '5px' }} xs={3} />
-
+                                    <Field as={TextField} name="name" label="First Name" sx={{ marginBottom: '5px' }} />
                                     <ErrorMessage name='name' />
-
                                     <Field as={TextField} name="lastname" label="Last Name" sx={{ marginBottom: '5px' }} />
-
                                     <ErrorMessage name='lastname' />
-
                                     <Field as={TextField} name="email" label="Email Id" sx={{ marginBottom: '5px' }} />
-
                                     <ErrorMessage name='email' />
-
                                     <Field as={TextField} name="password" label="Password" sx={{ marginBottom: '5px' }} />
-
                                     <ErrorMessage name='password' />
-
-                                    <Button variant="contained" color="primary" type="submit" >Register</Button>
+                                    <Button variant="contained" color="primary" type="submit">Register</Button>
                                     <ToastContainer />
-                                    <p className=''>Already have an account? <span><Link to="/login">Login In</Link></span></p>
+                                    <p>Already have an account? <span><Link to="/login">Login In</Link></span></p>
                                 </div>
                             </Form>
                         </Paper>
@@ -94,7 +98,7 @@ function Reg() {
                 </div>
             </Formik>
         </>
-    )
+    );
 }
 
-export default Reg
+export default Reg;
