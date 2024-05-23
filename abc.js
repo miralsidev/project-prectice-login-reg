@@ -1,104 +1,66 @@
-import axios from 'axios';
-
-const api = axios.create({
-    baseURL: 'http://localhost:5000/api',
-});
-
-export const addUser = (userData) => {
-    return api.post('/addUser', userData);
-};
-
-import React from 'react';
-import { Paper, TextField, Button } from '@mui/material';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { Link, useNavigate } from "react-router-dom";
-import * as yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
-import 'material-react-toastify/dist/ReactToastify.css';
-import { addUser } from './services/api';  // Import the addUser function from the services folder
-import './Reg.css';
-
-function Reg() {
-    const validationSchema = yup.object({
-        name: yup.string()
-            .required('First Name is required'),
-        lastname: yup.string()
-            .required('Last Name is required'),
-        email: yup.string()
-            .email('Invalid email address')
-            .required('Email is required'),
-        password: yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
-    });
-
-    const navigate = useNavigate();
-
-    const hasFormSubmit = async (values, { resetForm }) => {
-        try {
-            console.log("Form data=", values);
-            await addUser({
-                fname: values.name,
-                lname: values.lastname,
-                email: values.email,
-                password: values.password
-            });
-            resetForm();
-            navigate('/login');
-        } catch (error) {
-            if (error.response) {
-                const status = error.response.status;
-                const message = error.response.data.message;
-
-                if (status === 400) {
-                    toast.error(message || 'User already exists.');
-                } else if (status === 500) {
-                    toast.error(message || 'Internal server error.');
-                } else {
-                    toast.error('An unexpected error occurred.');
-                }
-            }
-            console.error('There was an error submitting the form!', error);
+const resendOtp = async (req, res) => {
+    const { email } = req.body;
+    try {
+      if (!email) {
+        return res.status(400).json({ message: "Please enter the email!" });
+      }
+  
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+  
+      const now = new Date();
+      if (user.otp && user.otpExpiration > now) {
+        // OTP is still valid, no need to generate a new one
+        return res.status(200).json({ message: "OTP has already been sent and is still valid!" });
+      }
+  
+      // Generate a new OTP
+      const generateOTP = () => Math.floor(1000 + Math.random() * 9000).toString();
+      const otp = generateOTP();
+      console.log("Generated OTP:", otp);
+  
+      const otpExpiration = new Date(Date.now() + 60 * 1000); // OTP expires in 1 minute
+      await User.findOneAndUpdate(
+        { _id: user.id },
+        { $set: { otp, otpExpiration } }
+      );
+  
+      const transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: false,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+      });
+  
+      const mailOptions = {
+        from: process.env.EMAIL_FROM,
+        to: user.email,
+        subject: "Resend OTP for Password Reset",
+        text: `Your OTP for password reset is: ${otp}`,
+      };
+  
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+          return res.status(500).json({ message: "Error sending email", error });
+        } else {
+          console.log("Email sent:", info.response);
+          return res.status(200).json({ message: "OTP Resent Successfully" });
         }
-    };
-
-    return (
-        <>
-            <Formik 
-                validationSchema={validationSchema} 
-                initialValues={{
-                    name: '',
-                    lastname: '',
-                    email: '',
-                    password: '',
-                }}
-                onSubmit={hasFormSubmit} 
-            >
-                <div className='main-container-reg'>
-                    <div className="container-fluid d-flex justify-content-center reg-main-form">
-                        <Paper elevation={2} sx={{ width: '30%' }}>
-                            <Form action="" className='main-form-div'>
-                                <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
-                                    <p className='text-center fs-3'>Register Account Form</p>
-                                    <Field as={TextField} name="name" label="First Name" sx={{ marginBottom: '5px' }} />
-                                    <ErrorMessage name='name' />
-                                    <Field as={TextField} name="lastname" label="Last Name" sx={{ marginBottom: '5px' }} />
-                                    <ErrorMessage name='lastname' />
-                                    <Field as={TextField} name="email" label="Email Id" sx={{ marginBottom: '5px' }} />
-                                    <ErrorMessage name='email' />
-                                    <Field as={TextField} name="password" label="Password" sx={{ marginBottom: '5px' }} />
-                                    <ErrorMessage name='password' />
-                                    <Button variant="contained" color="primary" type="submit">Register</Button>
-                                    <ToastContainer />
-                                    <p>Already have an account? <span><Link to="/login">Login In</Link></span></p>
-                                </div>
-                            </Form>
-                        </Paper>
-                    </div>
-                </div>
-            </Formik>
-        </>
-    );
-}
-
-export default Reg;
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error", error });
+    }
+  };
+  
+  module.exports = { resendOtp };
+  
