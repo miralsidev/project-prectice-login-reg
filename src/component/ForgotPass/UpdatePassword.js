@@ -10,7 +10,6 @@ import { UpdatePasswordServices } from '../../Servicer/Registration';
 function UpdatePassword() {
 
   const validationSchema = yup.object({
-
     password: yup.string()
       .min(6, 'Password must be at least 6 characters')
       .required('Password is required'),
@@ -29,15 +28,19 @@ function UpdatePassword() {
   const navigate = useNavigate()
   const hasFormSubmit = async (values) => {
     try {
-
-      await UpdatePasswordServices ({
+      const res = await UpdatePasswordServices ({
         email: values.email,
         newpassword: values.password,
         conformPassword: values.Cofirmpassword
       });
-
-      notify(() => navigate('/login'));
-
+      console.log("res------------",res);
+      const data = res.data
+      if(data.status === 400){
+        toast.error(data.message || 'Something Went Wrong');
+      }
+      else{
+           notify(() => navigate('/login'));
+      }
     } catch (error) {
       console.error('There was an error submitting the form!', error);
     }
@@ -55,7 +58,7 @@ function UpdatePassword() {
         onSubmit={hasFormSubmit} >
         <div className=' main-container-reg'>
           <div className="container-fluid d-flex justify-content-center login-form-main">
-            <Paper elevation={2} sx={{ width: '400px' }}  >
+            <Paper elevation={2} sx={{ width: 'auto' }}  >
               <Form action="" className='main-form-div'>
                 <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
                   <p className='text-center fs-3'>Choose New Password</p>

@@ -7,3 +7,34 @@ body {
 .reg-main-form{
     margin-top: 100px;
 }
+
+
+/* body {
+    background-color: #5eb2b3 !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.reg-main-form {
+    margin-top: 100px;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-form-div {
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    .reg-main-form {
+        width: 90%;
+    }
+
+    .main-form-div {
+        padding: 15px;
+    }
+} */

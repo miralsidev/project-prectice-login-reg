@@ -31,6 +31,17 @@ function Login() {
             localStorage.setItem('token', response.data.token);
             notify(() => navigate('/Home'));
         } catch (error) {
+            if(error.response){
+                const status = error.response.status;
+                const message = error.response.data.message;
+                if(status === 409){
+                    toast.error(message ||'Something Went Wrong' )
+                }else if(status === 500){
+                    toast.error(message || 'internal server error')
+                }else if(status === 400){
+                    toast.error(message || 'all filed are required')
+                }
+            }
             console.error('There was an error submitting the form!', error);
         }
     }
@@ -49,7 +60,7 @@ function Login() {
 
                 <div className=' main-container-reg'>
                     <div className="container-fluid d-flex justify-content-center login-form-main">
-                        <Paper elevation={2} sx={{ width: '30%' }}  >
+                        <Paper elevation={2} sx={{ width: 'auto' }}  >
                             <Form action="" className='main-form-div'>
                                 <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
                                     <p className='text-center fs-3'>Login Form</p>

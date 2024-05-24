@@ -1,5 +1,5 @@
 import React from 'react'
-import  {RegistrationServices}  from '../../Servicer/Registration';
+import { RegistrationServices } from '../../Servicer/Registration';
 import { Paper, TextField, Button } from '@mui/material';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import './Reg.css'
@@ -27,9 +27,9 @@ function Reg() {
             console.log("Form data=", values);
             await RegistrationServices({
                 fname: values.name,
-                    lname: values.lastname,
-                    email: values.email,
-                    password: values.password
+                lname: values.lastname,
+                email: values.email,
+                password: values.password
             })
 
             resetForm();
@@ -41,7 +41,7 @@ function Reg() {
                 const message = error.response.data.message;
 
                 if (status === 400) {
-                    toast.error(message || 'User already exists.');
+                    toast.error(message || 'Something Went Wrong');
                 }
                 else if (status === 500) {
                     toast.error(message || 'Internal server error.');
@@ -63,33 +63,38 @@ function Reg() {
                 onSubmit={hasFormSubmit} >
 
                 <div className=' main-container-reg'>
-                    <div className="container-fluid d-flex justify-content-center reg-main-form">
-                        <Paper elevation={2} sx={{ width: '30%' }}  >
-                            <Form action="" className='main-form-div'>
-                                <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
-                                    <p className='text-center fs-3'>Register Account Form</p>
-                                    <Field as={TextField} name="name" label="First Name" sx={{ marginBottom: '5px' }} xs={3} />
+                    <div className="container-fluid  reg-main-form">
+                        <div className='row justify-content-center'>
+                            <div className=' col-sm-10 col-md-8 col-lg-6 col-xl-3 '>
+                                <Paper elevation={2} sx={{ width: '100%' }}  >
+                                    <Form action="" className='main-form-div'>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
+                                            <p className='text-center fs-3'>Register Account Form</p>
+                                            <Field as={TextField} name="name" label="First Name" sx={{ marginBottom: '5px' }} xs={3} />
 
-                                    <ErrorMessage name='name' />
+                                            <ErrorMessage name='name' />
 
-                                    <Field as={TextField} name="lastname" label="Last Name" sx={{ marginBottom: '5px' }} />
+                                            <Field as={TextField} name="lastname" label="Last Name" sx={{ marginBottom: '5px' }} />
 
-                                    <ErrorMessage name='lastname' />
+                                            <ErrorMessage name='lastname' />
 
-                                    <Field as={TextField} name="email" label="Email Id" sx={{ marginBottom: '5px' }} />
+                                            <Field as={TextField} name="email" label="Email Id" sx={{ marginBottom: '5px' }} />
 
-                                    <ErrorMessage name='email' />
+                                            <ErrorMessage name='email' />
 
-                                    <Field as={TextField} name="password" label="Password" sx={{ marginBottom: '5px' }} />
+                                            <Field as={TextField} name="password" label="Password" sx={{ marginBottom: '5px' }} />
 
-                                    <ErrorMessage name='password' />
+                                            <ErrorMessage name='password' />
 
-                                    <Button variant="contained" color="primary" type="submit" >Register</Button>
-                                    <ToastContainer />
-                                    <p className=''>Already have an account? <span><Link to="/login">Login In</Link></span></p>
-                                </div>
-                            </Form>
-                        </Paper>
+                                            <Button variant="contained" color="primary" type="submit" >Register</Button>
+                                            <ToastContainer />
+                                            <p className=''>Already have an account? <span><Link to="/login">Login In</Link></span></p>
+                                        </div>
+                                    </Form>
+                                </Paper>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </Formik>
