@@ -11,7 +11,7 @@ import { OTPVerificationServices } from '../../Servicer/Registration'
 import { ForgotPasswordServices } from '../../Servicer/Registration';
 function OTPVerificationForm() {
     const [timer, setTimer] = useState(20);
-    const [isResendDisabled, setIsResendDisabled] = useState(true);
+    const [isResendDisabled, setIsResendDisabled] = useState(true); 
     useEffect(() => {
         if (timer > 0) {
             const intervalId = setInterval(() => {
