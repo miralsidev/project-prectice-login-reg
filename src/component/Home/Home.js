@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../NavBar/NavBar'
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import backgroundImage from '../Images/background.jpeg';
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import axios from "axios";
 function Home() {
   const [selectedValue, setSelectedValue] = useState('');
-
+  const [cars, setCars] = useState([]);
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
+  };
+  useEffect(() => {
+    console.log("----data--==", data);
+    data();
+  }, []);
+  const data = () => {
+    axios
+      .get("http://localhost:5000/cars/GetData")
+      .then((res) => {
+        // setCars(res.data);
+        setCars(res.data.reverse()); //reverse ma print karva mate
+        console.log("res.data -- get  ====", res.data);
+      })
+      .catch((error) => {
+        console.error("fetching error = = ", error);
+      });
   };
   return (
     <>
@@ -22,6 +39,7 @@ function Home() {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         position: 'relative',
+        marginBottom:'5%',
         zIndex: 0
       }}>
         <div className='' style={{ display: "flex", justifyContent: "center" }}>
@@ -127,6 +145,42 @@ function Home() {
             {/* </Box> */}
           </Box>
         </div>
+      </div>
+      <div>
+
+        {cars ? (
+          <div className='row gap-4 w-100 d-flex justify-content-center col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-12'>
+            {cars.map((cars, index) => (
+              
+              <div className="card " style={{ width: "18rem" }}>
+                {console.log(`http://localhost:5000/${cars?.path}`)}
+                <img
+                  src={`http://localhost:5000/${cars.path}`}
+                  alt={`car-${index}`}
+                  style={{ width: "100%", height: "100%" }}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">Card title</h5>
+                  <p className="card-text">{cars.plate_number}</p>
+                  <p>{cars.model}</p>
+                </div>
+                <ul className="list-group list-group-flush">
+                  <li className="list-group-item">An item</li>
+                  <li className="list-group-item">A second item</li>
+                  <li className="list-group-item">A third item</li>
+                </ul>
+                <div className="card-body">
+                  {/* <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a> */}
+                </div>
+              </div>
+            ))}
+          </div>
+
+
+        ) : (
+          <p>Loading users...</p>
+        )}
       </div>
 
 
