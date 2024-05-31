@@ -8,6 +8,7 @@ import backgroundImage from '../Images/background.jpeg';
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import axios from "axios";
+import Footer from '../Footer/Footer';
 function Home() {
   const [selectedValue, setSelectedValue] = useState('');
   const [cars, setCars] = useState([]);
@@ -22,7 +23,7 @@ function Home() {
     axios
       .get("http://localhost:5000/cars/GetData")
       .then((res) => {
-        // setCars(res.data);
+
         setCars(res.data.reverse()); //reverse ma print karva mate
         console.log("res.data -- get  ====", res.data);
       })
@@ -39,7 +40,7 @@ function Home() {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         position: 'relative',
-        marginBottom:'5%',
+        marginBottom: '5%',
         zIndex: 0
       }}>
         <div className='' style={{ display: "flex", justifyContent: "center" }}>
@@ -47,23 +48,16 @@ function Home() {
             width: 'auto',
             height: 'auto',
             backgroundColor: 'rgba(255, 255, 255, 0.4)',
-
             borderRadius: 3,
             position: 'absolute',
             top: '15%',
-            // display:'flex',
             zIndex: 1,
-            // justifyContent:'center',
             padding: 2,
-
-
           }}>
             <Stack sx={{ display: 'flex', justifyContent: 'center' }}>
               <Typography textAlign={"center"} variant='h4' sx={{
                 color: 'white'
               }}>Start Your Journey</Typography>
-
-              {/* <Box sx={{ display: 'flex', flexDirection: 'row', gap: 4, width: '100%', mt: 3 }}> */}
               <Stack sx={{ display: 'flex', flexDirection: 'row', gap: 4, width: '100%', mt: 3, justifyContent: 'center' }}>
                 <Stack>
                   <Stack sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -142,17 +136,16 @@ function Home() {
 
               </Stack>
             </Stack>
-            {/* </Box> */}
           </Box>
         </div>
       </div>
-      <div>
-
+      <div >
         {cars ? (
           <div className='row gap-4 w-100 d-flex justify-content-center col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-12'>
             {cars.map((cars, index) => (
-              
+
               <div className="card " style={{ width: "18rem" }}>
+                {/* rgb(224 201 206)   background:'#86535D'*/}
                 {console.log(`http://localhost:5000/${cars?.path}`)}
                 <img
                   src={`http://localhost:5000/${cars.path}`}
@@ -170,8 +163,7 @@ function Home() {
                   <li className="list-group-item">A third item</li>
                 </ul>
                 <div className="card-body">
-                  {/* <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a> */}
+    
                 </div>
               </div>
             ))}
@@ -182,6 +174,7 @@ function Home() {
           <p>Loading users...</p>
         )}
       </div>
+      <Footer/>
 
 
 
