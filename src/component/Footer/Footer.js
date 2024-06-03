@@ -8,7 +8,7 @@ const Footer = () => {
     return (
         <>
 
-            <footer className="text-center text-lg-start text-white mt-4" style={{ backgroundColor: '#45526e' }}>
+            <footer className="text-center text-lg-start text-white mt-4" style={{background:'#6D4A56'}}>
                 <div className="container p-4 pb-0">
                     <section>
                         <div className="row">
