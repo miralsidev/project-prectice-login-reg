@@ -10,8 +10,9 @@ import Home from './component/Home/Home';
 import Blog from './component/Blog/Blog';
 import Footer from './component/Footer/Footer';
 import Contact from './component/Contact/Contact';
+import Logout from './component/Logout/Logout';
+import Profile from './component/Profile/Profile';
 // import NavBar from './component/NavBar/NavBar';
-
 function App() {
   return (
     <>
@@ -26,6 +27,8 @@ function App() {
         <Route path='/blog' element={<Blog />} />
         <Route path='/footer' element={<Footer/>}/>
         <Route path='/contact' element={<Contact/>}/>
+        <Route path='/logout' element={<Logout /> }/>
+        <Route path='/Profile' element={<Profile/>}/>
       </Routes>
     </>
   );
