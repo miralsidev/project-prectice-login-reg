@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '../NavBar/NavBar'
 import { Box, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import backgroundImage from '../Images/background.jpeg';
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import CarsDetails from './CarsDetails';
 import axios from "axios";
 import Footer from '../Footer/Footer';
 function Home() {
+  const [show, setShow] = useState(false);
+  const [filterCar, setFilterCar] = useState(null);
+  const handleClose = () => setShow(false);
+  const handleShow = (car) => {
+    console.log(car, "<-------------carskfjgkjldfjgkldjfgkljdflkgjlkdfj---------------------->")
+    setFilterCar(car)
+    setShow(true);
+  };
+
   const [selectedValue, setSelectedValue] = useState('');
   const [cars, setCars] = useState([]);
   const handleChange = (event) => {
@@ -140,30 +151,26 @@ function Home() {
         </div>
       </div>
       <div >
+        {console.log("cars ==", cars)}
         {cars ? (
           <div className='row gap-4 w-100 d-flex justify-content-center col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-12'>
-            {cars.map((cars, index) => (
+            {cars.map((car, index) => (
 
-              <div className="card " style={{ width: "18rem" }}>
+              <div className="card " style={{ maxWidth: "18rem" }}>
                 {/* rgb(224 201 206)   background:'#86535D'*/}
-                {console.log(`http://localhost:5000/${cars?.path}`)}
+                {console.log(`http://localhost:5000/${car?.path}`)}
                 <img
-                  src={`http://localhost:5000/${cars.path}`}
+                  src={`http://localhost:5000/${car.path}`}
                   alt={`car-${index}`}
                   style={{ width: "100%", height: "100%" }}
                 />
                 <div className="card-body">
-                  <h5 className="card-title">Card title</h5>
-                  <p className="card-text">{cars.plate_number}</p>
-                  <p>{cars.model}</p>
+                  <h5 className="card-title">{car.model}</h5>
+                  <p className="card-text">{car.plate_number}</p>
                 </div>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item">An item</li>
-                  <li className="list-group-item">A second item</li>
-                  <li className="list-group-item">A third item</li>
-                </ul>
-                <div className="card-body">
-    
+
+                <div className="card-body d-flex justify-content-center">
+                  <Button variant="contained" style={{ backgroundColor: '#6D4A56' }} onClick={() => handleShow(car)} className='w-75'>Views Details</Button>
                 </div>
               </div>
             ))}
@@ -174,10 +181,14 @@ function Home() {
           <p>Loading users...</p>
         )}
       </div>
-      <Footer/>
-
-
-
+      <Footer />
+      {
+        filterCar && 
+        <CarsDetails show={show}
+          handleClose={handleClose}
+          cars={filterCar}
+          data={data} />
+      }
     </>
   )
 }

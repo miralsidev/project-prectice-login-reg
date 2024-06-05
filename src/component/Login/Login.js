@@ -27,7 +27,7 @@ function Login() {
       });
       const data = response.data;
       console.log("res = ", data);
-      if (data.status === 400) {
+      if (data.status === 409) {
         toast.error(data.message || "Something Went Wrong");
       } else if (data.status === 200) {
         localStorage.setItem("token", response.data.token);
@@ -35,6 +35,9 @@ function Login() {
       } else if (data.status === 500) {
         toast.error(data.message || "Something Went Wrong");
       }
+      else if(data.status === 400) {
+            toast.error(data.message || "Something Went Wrong");
+          }
     } catch (error) {
       console.error("There was an error submitting the form!", error);
     }

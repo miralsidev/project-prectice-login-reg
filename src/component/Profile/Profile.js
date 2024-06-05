@@ -24,6 +24,7 @@ const Profile = () => {
                     }
                 })
                     .then((res) => {
+                        console.log("res======================",res);
                         setUserData(res.data);
                         console.log("res.data -- get  ====", res.data);
                     })

@@ -14,13 +14,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
-
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const pages = [
     { name: 'Home', path: '/Home' },
     { name: 'MyBooking', path: '/mybooking' },
     { name: 'Contact Us', path: '/contact' },
-    { name: 'Blog', path: '/blog' }
+    { name: 'Blog', path: '/blog' },
+    { name: 'Login', path: '/login' }
 ];
 const settings = [
     { name: 'Profile', path: '/Profile' },
@@ -34,19 +33,21 @@ function NavBar() {
 
     React.useEffect(() => {
         const token = localStorage.getItem('token');
-        console.log("token -- ",token);
+        console.log("token -- ", token);
         if (token) {
             try {
                 const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decoding JWT token
-                console.log("todecodedTokenn -- ",decodedToken);
+                console.log("todecodedTokenn -- ", decodedToken);
+                console.log("decodedToken.userEmail==", decodedToken.userEmail);
                 setUserName(decodedToken.userEmail || '');
+
                 setIsLoggedIn(true);
             } catch (e) {
                 console.error('Failed to decode token', e);
             }
         }
     }, []);
-    console.log("userName==",userName);
+    console.log("userName==", userName);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -63,6 +64,7 @@ function NavBar() {
         setAnchorElUser(null);
     };
     const getFirstLetter = (name) => {
+
         return name ? name.charAt(0).toUpperCase() : '';
     };
     return (
@@ -160,7 +162,7 @@ function NavBar() {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    {console.log("user name ==",userName)}
+                                    {console.log("user name ==", userName)}
                                     <Avatar>{getFirstLetter(userName)}</Avatar>
                                 </IconButton>
                             </Tooltip>

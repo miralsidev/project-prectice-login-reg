@@ -49,7 +49,7 @@ const Contact = () => {
     return (
         <>
             <NavBar />
-            <div className=' row d-flex gap-5 justify-content-center pt-5'>
+            <div className=' row d-flex gap-5 justify-content-center pt-5 w-100'>
                 <div className="card " style={{ width: "18rem" }}>
                     <div className="card-body ">
                         <h2 className="card-title"><MdLocationOn /></h2>
@@ -88,6 +88,7 @@ const Contact = () => {
                         Message:''
                     }}  
                     onSubmit={hasFormSubmit}
+                    
                 >
                     <div className=' main-container-reg'>
                         <div className=" reg-main-form ">
