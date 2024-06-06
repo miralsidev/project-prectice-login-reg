@@ -12,11 +12,12 @@ import Footer from './component/Footer/Footer';
 import Contact from './component/Contact/Contact';
 import Logout from './component/Logout/Logout';
 import Profile from './component/Profile/Profile';
+import Protecter from './component/Protected/Protected';
 // import NavBar from './component/NavBar/NavBar';
 function App() {
   return (
     <>
-    {/* <NavBar/> */}
+      {/* <NavBar/> */}
       <Routes>
         <Route path="/" element={<Reg />} />
         <Route path="/login" element={<Login />} />
@@ -30,6 +31,25 @@ function App() {
         <Route path='/logout' element={<Logout /> }/>
         <Route path='/Profile' element={<Profile/>}/>
       </Routes>
+      {/* <Routes>
+        <Route path="/*" element={<Home />}> */}
+          {/* <Route path="deshbord" element={<Protecter Component={Deshbord} />} />
+          <Route path="user" element={<Protecter Component={User} />} /> */}
+          {/* <Route path="user" element={<User />} /> */}
+          {/* <Route path="home" element={<Protecter Component={Home} />} /> */}
+
+          {/* <Route path="profile" element={<Protecter Component={Cars} />} /> */}
+          {/* <Route path="*" element={<Navigate to="deshbord" />} /> */}
+          {/* <Route path='CarsForm' element={<Protecter Component={CarsForm} />} />
+          <Route path='BlogForm' element={<Protecter Component={BlogForm} />} /> */}
+              {/* <Route path='Home' element={<Protecter Component={Home} />} />
+          <Route path='Contact' element={<Protecter Component={Contact} />} />
+          <Route path='Profile' element={<Protecter Component={Profile} />} />
+          <Route path="blogs" element={<Protecter Component={Blog} />} />
+        </Route>
+    
+        
+      </Routes> */}
     </>
   );
 }

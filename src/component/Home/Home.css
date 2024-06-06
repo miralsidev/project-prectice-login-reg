@@ -1,0 +1,38 @@
+/* @keyframes drive {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  } */
+  
+  /* .Appcars {
+    position: relative;
+    height: 5vh;
+    overflow: hidden;
+}
+
+.road {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+}
+
+.CarFooter {
+    position: absolute;
+    font-size: 2rem;
+    animation: moveCar 5s linear infinite;
+}
+
+@keyframes moveCar {
+    from {
+        right: -100px;
+    }
+    to {
+        right: 100%;
+    }
+} */
+
+  

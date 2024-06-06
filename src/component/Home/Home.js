@@ -11,7 +11,20 @@ import Stack from '@mui/material/Stack';
 import CarsDetails from './CarsDetails';
 import axios from "axios";
 import Footer from '../Footer/Footer';
+import MapComponent from './MapComponent';
+import './Home.css'
+import { BsFillFuelPumpDieselFill } from "react-icons/bs";
+import { MdOutlineAirlineSeatReclineExtra } from "react-icons/md";
+import { TbAirConditioningDisabled } from "react-icons/tb";
+
 function Home() {
+  const carsfooter = [
+    { id: 1, top: '10%' },
+    // { id: 2, top: '30%' },
+    // { id: 3, top: '50%' },
+    // { id: 4, top: '70%' },
+  ];
+
   const [show, setShow] = useState(false);
   const [filterCar, setFilterCar] = useState(null);
   const handleClose = () => setShow(false);
@@ -163,14 +176,32 @@ function Home() {
                   src={`http://localhost:5000/${car.path}`}
                   alt={`car-${index}`}
                   style={{ width: "100%", height: "100%" }}
-                />
+                /><hr />
                 <div className="card-body">
                   <h5 className="card-title">{car.model}</h5>
-                  <p className="card-text">{car.plate_number}</p>
+                  <p><span style={{ color: 'blue' }}>$59</span> Per Day</p>
+
+                </div>
+                <div className='d-flex justify-content-center'>
+                  <div className='w-75  border d-flex justify-content-around'>
+                    <div >
+                    <BsFillFuelPumpDieselFill className='fs-2'/>
+                    <p>{car.fuel}</p>
+                    </div>
+                    <div>
+                    <MdOutlineAirlineSeatReclineExtra className='fs-2'/>
+                    </div>
+                    <div>
+                    <TbAirConditioningDisabled className='fs-2'/>
+
+                    </div>
+
+                  </div>
+
                 </div>
 
                 <div className="card-body d-flex justify-content-center">
-                  <Button variant="contained" style={{ backgroundColor: '#6D4A56' }} onClick={() => handleShow(car)} className='w-75'>Views Details</Button>
+                  <Button variant="contained" style={{ backgroundColor: '#6D4A56' }} onClick={() => handleShow(car)} className='w-100'>Views Details</Button>
                 </div>
               </div>
             ))}
@@ -181,9 +212,28 @@ function Home() {
           <p>Loading users...</p>
         )}
       </div>
+      <div className='findus mt-5' style={{ backgroundColor: '#F0F0F0' }}>
+
+        <div className='d-flex justify-content-center pt-3'>
+          <div className='fs-5'>Call Today For Booking Your  Next Ride</div>
+        </div>
+
+        {/* <div className=' d-flex justify-content-center row pb-3 pt-2'> */}
+        {/* <div className='col-2 border rounded-pill p-3 text-center fs-3' style={{color:'white'}}> */}
+        <div className='text-center p-3'>
+          + 99877 65432
+        </div>
+        {/* </div>
+        </div> */}
+      </div>
+      <div>
+        <p className='fs-3 d-flex justify-content-center pt-2'>Find Us</p>
+        <MapComponent />
+      </div>
+
       <Footer />
       {
-        filterCar && 
+        filterCar &&
         <CarsDetails show={show}
           handleClose={handleClose}
           cars={filterCar}

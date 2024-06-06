@@ -10,39 +10,39 @@ import { FaFax } from "react-icons/fa";
 import { MdAttachEmail } from "react-icons/md";
 import { ContactServices } from '../../Servicer/Contact';
 import { ToastContainer, toast } from 'react-toastify'
+import MapComponent from '../Home/MapComponent';
 const Contact = () => {
     const validationSchema = yup.object({
-        Name:yup.string().required('Name is required'),
+        Name: yup.string().required('Name is required'),
         Email: yup.string()
-        .email('Invalid email address')
-        .required('Email is required'),
-        Message:yup.string().required('Message is required')
+            .email('Invalid email address')
+            .required('Email is required'),
+        Message: yup.string().required('Message is required')
     })
-    const hasFormSubmit = async(values,{resetForm}) =>{
+    const hasFormSubmit = async (values, { resetForm }) => {
         try {
-            console.log("form data = ",values);
+            console.log("form data = ", values);
             const res = await ContactServices({
-                Name:values.Name,
-                Email:values.Email,
-                Message:values.Message
+                Name: values.Name,
+                Email: values.Email,
+                Message: values.Message
             })
             resetForm();
             const data = res.data
-            if(data.status === 400)
-                {
-                    toast.error(data.message || 'Something Went Wrong');
-                }
-                else if(data.status === 500){
-                    toast.error(data.message || 'Internal server error.');
-                }
-                else if(data.status === 200){
-                    toast.success(data.message || 'Internal server error.');
-                }
-                else{
-                    toast.error('An unexpected error occurred.');
-                }
+            if (data.status === 400) {
+                toast.error(data.message || 'Something Went Wrong');
+            }
+            else if (data.status === 500) {
+                toast.error(data.message || 'Internal server error.');
+            }
+            else if (data.status === 200) {
+                toast.success(data.message || 'Internal server error.');
+            }
+            else {
+                toast.error('An unexpected error occurred.');
+            }
         } catch (error) {
-            
+
             console.error('There was an error submitting the form!', error);
         }
     }
@@ -79,16 +79,23 @@ const Contact = () => {
                     </div>
                 </div>
             </div>
+            <div className='d-flex justify-content-center mt-5'>
+                <div className='w-50'>
+                    <MapComponent   />
+                </div>
+            </div>
+
+
             <div>
                 <Formik
                     validationSchema={validationSchema}
                     initialValues={{
-                        Name:'',
-                        Email:'',
-                        Message:''
-                    }}  
+                        Name: '',
+                        Email: '',
+                        Message: ''
+                    }}
                     onSubmit={hasFormSubmit}
-                    
+
                 >
                     <div className=' main-container-reg'>
                         <div className=" reg-main-form ">

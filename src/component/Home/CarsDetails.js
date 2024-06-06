@@ -10,7 +10,7 @@ const CarsDetails = ({ show, cars, handleClose }) => {
         animation={false}
         style={{ width: "100%" }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton >
           <Modal.Title>{"Add Car"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
