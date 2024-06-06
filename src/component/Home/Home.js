@@ -212,24 +212,22 @@ function Home() {
           <p>Loading users...</p>
         )}
       </div>
-      <div className='findus mt-5' style={{ backgroundColor: '#F0F0F0' }}>
+      {/* <div className='findus mt-5' style={{ backgroundColor: '#F0F0F0' }}>
 
         <div className='d-flex justify-content-center pt-3'>
           <div className='fs-5'>Call Today For Booking Your  Next Ride</div>
         </div>
 
-        {/* <div className=' d-flex justify-content-center row pb-3 pt-2'> */}
-        {/* <div className='col-2 border rounded-pill p-3 text-center fs-3' style={{color:'white'}}> */}
+   
         <div className='text-center p-3'>
           + 99877 65432
         </div>
-        {/* </div>
-        </div> */}
+
       </div>
       <div>
         <p className='fs-3 d-flex justify-content-center pt-2'>Find Us</p>
         <MapComponent />
-      </div>
+      </div> */}
 
       <Footer />
       {

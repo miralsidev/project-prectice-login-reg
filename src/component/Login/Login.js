@@ -31,7 +31,7 @@ function Login() {
         toast.error(data.message || "Something Went Wrong");
       } else if (data.status === 200) {
         localStorage.setItem("token", response.data.token);
-        notify(() => navigate("/Home"));
+        notify(() => navigate("/"));
       } else if (data.status === 500) {
         toast.error(data.message || "Something Went Wrong");
       }
@@ -101,7 +101,7 @@ function Login() {
                   <p className="">
                     Don't have an account?{" "}
                     <span>
-                      <Link to="/" className="text-decoration-none">
+                      <Link to="/reg" className="text-decoration-none">
                         Register Here
                       </Link>
                     </span>

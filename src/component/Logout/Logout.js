@@ -6,7 +6,7 @@ function Logout() {
 
     useEffect(() => {
         localStorage.clear();
-        navigate('/Home');
+        navigate('/');
     }, [navigate]);
 
     return null;

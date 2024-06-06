@@ -19,12 +19,14 @@ function App() {
     <>
       {/* <NavBar/> */}
       <Routes>
-        <Route path="/" element={<Reg />} />
+        {/* <Route path="/" element={<Reg />} /> */}
+        <Route path="/reg" element={<Reg />} />
         <Route path="/login" element={<Login />} />
         <Route path="/ForgotPasswordForm" element={<ForgotPasswordForm />} />
         <Route path='/OTPVerificationForm' element={<OTPVerificationForm />} />
         <Route path='/UpdatePassword' element={<UpdatePassword />} />
-        <Route path='/Home' element={<Home />} />
+        {/* <Route path='/Home' element={<Home />} /> */}
+        <Route path='/' element={<Home />} />
         <Route path='/blog' element={<Blog />} />
         <Route path='/footer' element={<Footer/>}/>
         <Route path='/contact' element={<Contact/>}/>
