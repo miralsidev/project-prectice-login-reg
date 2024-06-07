@@ -56,7 +56,7 @@ const Book = () => {
                 return_date: dayjs(returnDate).format('YYYY-MM-DD'),
                 pickup_time: values.pickup_time,
                 return_time: values.return_time,
-                price:price
+                price: price
             });
             const data = res.data;
 
