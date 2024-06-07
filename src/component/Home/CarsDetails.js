@@ -49,6 +49,7 @@ const CarsDetails = ({ show, cars, handleClose }) => {
             <div className="price-container ps-4">
               <p><span style={{ color: 'blue' }}><IndianRupee />{cars.price}</span> / Per Day</p>
               {console.log("==================cars id ==", cars)}
+              
               <button type="button" className="btn btn-primary" onClick={() => handleSubmit(cars)} >Book Now</button>
             </div>
           </div>

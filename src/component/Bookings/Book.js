@@ -131,15 +131,17 @@ const Book = () => {
                                     <ErrorMessage name='return_date' />
                                     {duration !== null && (
                                         <Typography textAlign={"center"} sx={{ color: 'Black' }}>
-                                            {duration} day{duration !== 1 && 's'} selected
+                                            {duration} day{duration !== 1 && 's'} selected Total {price}
+                                            
                                         </Typography>
+                                   
                                     )}
                                     <Field as={TextField} name="pickup_time" label="Pickup Time" sx={{ marginBottom: '5px' }} />
                                     <ErrorMessage name='pickup_time' />
                                     <Field as={TextField} name="return_time" label="Return Time" sx={{ marginBottom: '5px' }} />
                                     <ErrorMessage name='return_time' />
                                     <Button type="submit" style={{ background: '#6D4A56', color: 'white' }}>
-                                        Submit
+                                        Payment Now
                                     </Button>
                                     <ToastContainer />
                                 </div>

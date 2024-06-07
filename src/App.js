@@ -13,7 +13,8 @@ import Contact from './component/Contact/Contact';
 import Logout from './component/Logout/Logout';
 import Profile from './component/Profile/Profile';
 import Book from './component/Bookings/Book';
-
+import Payment from './component/Bookings/Payment';
+import Product from './component/Bookings/Product';
 function App() {
   return (
     <>
@@ -33,6 +34,8 @@ function App() {
         <Route path='/logout' element={<Logout />} />
         <Route path='/Profile' element={<Profile />} />
         <Route path='/book/:carId' element={<Book />} />
+        {/* <Route path='/payemnt' element={<Payment/>}/>
+        <Route path='/Product' element={<Product/>}/> */}
       </Routes>
 
     </>
