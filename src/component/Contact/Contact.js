@@ -81,12 +81,12 @@ const Contact = () => {
             </div>
             <div className='d-flex justify-content-center mt-5'>
                 <div className='w-50'>
-                    <MapComponent   />
+                    <MapComponent />
                 </div>
             </div>
 
 
-            <div>
+            <div className=''>
                 <Formik
                     validationSchema={validationSchema}
                     initialValues={{
@@ -97,39 +97,39 @@ const Contact = () => {
                     onSubmit={hasFormSubmit}
 
                 >
-                    <div className=' main-container-reg'>
-                        <div className=" reg-main-form ">
-                            <div className='row'>
-                                <div className='justify-content-center d-flex'>
-                                    {/* col-12 col-lg-4 */}
-                                    <Paper elevation={2} className='col-sm-10 col-md-8 col-lg-6 col-xl-3 '>
-                                        <p className='d-flex justify-content-center fs-4 pt-3'>Drop Us A Message</p>
-                                        <Form action="" className='main-form-div '>
-                                            <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
+                    <div className='mt-5 main-container-reg'>
 
-                                                <Field as={TextField} name="Name" label="Name" sx={{ marginBottom: '5px' }} />
+                        {/* <div className='row'> */}
+                        <div className='justify-content-center d-flex'>
+                            {/* col-12 col-lg-4 */}
+                            <Paper elevation={2} className='col-sm-10 col-md-8 col-lg-6 col-xl-3 '>
+                                <p className='d-flex justify-content-center fs-4 pt-3'>Drop Us A Message</p>
+                                <Form action="" className='main-form-div '>
+                                    <div style={{ display: 'flex', flexDirection: 'column' }} className='gap-3 p-3'>
 
-                                                <ErrorMessage name='Name' />
+                                        <Field as={TextField} name="Name" label="Name" sx={{ marginBottom: '5px' }} />
 
-                                                <Field as={TextField} name="Email" label="Email Address" sx={{ marginBottom: '5px' }} />
+                                        <ErrorMessage name='Name' />
 
-                                                <ErrorMessage name='Email' />
+                                        <Field as={TextField} name="Email" label="Email Address" sx={{ marginBottom: '5px' }} />
 
-                                                <Field as={TextField} name="Message" label="Write Us A Message" sx={{ marginBottom: '5px' }} />
+                                        <ErrorMessage name='Email' />
 
-                                                <ErrorMessage name='Message' />
+                                        <Field as={TextField} name="Message" label="Write Us A Message" sx={{ marginBottom: '5px' }} />
 
-                                                <Button type="submit" style={{ background: '#6D4A56', color: 'white' }} >
-                                                    Submit
-                                                </Button>
-                                                <ToastContainer />
-                                            </div>
-                                        </Form>
-                                    </Paper>
-                                </div>
-                            </div>
+                                        <ErrorMessage name='Message' />
 
+                                        <Button type="submit" style={{ background: '#6D4A56', color: 'white' }} >
+                                            Submit
+                                        </Button>
+                                        <ToastContainer />
+                                    </div>
+                                </Form>
+                            </Paper>
                         </div>
+                        {/* </div> */}
+
+
                     </div>
                 </Formik>
             </div>

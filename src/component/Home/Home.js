@@ -11,25 +11,21 @@ import Stack from '@mui/material/Stack';
 import CarsDetails from './CarsDetails';
 import axios from "axios";
 import Footer from '../Footer/Footer';
-import MapComponent from './MapComponent';
 import './Home.css'
 import { BsFillFuelPumpDieselFill } from "react-icons/bs";
 import { MdOutlineAirlineSeatReclineExtra } from "react-icons/md";
 import { TbAirConditioningDisabled } from "react-icons/tb";
-
+import { IndianRupee } from 'lucide-react';
 function Home() {
-  const carsfooter = [
-    { id: 1, top: '10%' },
-    // { id: 2, top: '30%' },
-    // { id: 3, top: '50%' },
-    // { id: 4, top: '70%' },
-  ];
+  const FontStyle = {
+    fontSize: '20px'
+  };
 
   const [show, setShow] = useState(false);
   const [filterCar, setFilterCar] = useState(null);
   const handleClose = () => setShow(false);
   const handleShow = (car) => {
-    console.log(car, "<-------------carskfjgkjldfjgkldjfgkljdflkgjlkdfj---------------------->")
+    // console.log(car, "<-------------carskfjgkjldfjgkldjfgkljdflkgjlkdfj---------------------->")
     setFilterCar(car)
     setShow(true);
   };
@@ -40,7 +36,7 @@ function Home() {
     setSelectedValue(event.target.value);
   };
   useEffect(() => {
-    console.log("----data--==", data);
+    // console.log("----data--==", data);
     data();
   }, []);
   const data = () => {
@@ -49,7 +45,7 @@ function Home() {
       .then((res) => {
 
         setCars(res.data.reverse()); //reverse ma print karva mate
-        console.log("res.data -- get  ====", res.data);
+        // console.log("res.data -- get  ====", res.data);
       })
       .catch((error) => {
         console.error("fetching error = = ", error);
@@ -169,7 +165,7 @@ function Home() {
           <div className='row gap-4 w-100 d-flex justify-content-center col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-12'>
             {cars.map((car, index) => (
 
-              <div className="card " style={{ maxWidth: "18rem" }}>
+              <div className="card " style={{ maxWidth: "25rem" }} key={index}>
                 {/* rgb(224 201 206)   background:'#86535D'*/}
                 {console.log(`http://localhost:5000/${car?.path}`)}
                 <img
@@ -179,21 +175,22 @@ function Home() {
                 /><hr />
                 <div className="card-body">
                   <h5 className="card-title">{car.model}</h5>
-                  <p><span style={{ color: 'blue' }}>$59</span> Per Day</p>
+                  <p style={FontStyle}><span style={{ color: 'blue' }}><IndianRupee />{car.price}</span>Per Day</p>
 
                 </div>
                 <div className='d-flex justify-content-center'>
-                  <div className='w-75  border d-flex justify-content-around'>
-                    <div >
-                    <BsFillFuelPumpDieselFill className='fs-2'/>
-                    <p>{car.fuel}</p>
+                  <div className='border d-flex justify-content-around' style={{ width: '500px' }}>
+                    <div className='mt-3'>
+                      <BsFillFuelPumpDieselFill className='fs-2' />
+                      <p style={FontStyle}>{car.fuel}</p>
                     </div>
-                    <div>
-                    <MdOutlineAirlineSeatReclineExtra className='fs-2'/>
+                    <div className='mt-3'>
+                      <MdOutlineAirlineSeatReclineExtra className='fs-2' />
+                      <p style={FontStyle}>{car.seats}</p>
                     </div>
-                    <div>
-                    <TbAirConditioningDisabled className='fs-2'/>
-
+                    <div className='mt-3'>
+                      <TbAirConditioningDisabled className='fs-2' />
+                      <p style={FontStyle}>{car.Air_Conditioning_Availability}</p>
                     </div>
 
                   </div>

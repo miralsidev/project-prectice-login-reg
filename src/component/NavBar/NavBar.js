@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 const pages = [
-    { name: 'Home', path: '/Home' },
+    { name: 'Home', path: '/' },
     { name: 'MyBooking', path: '/mybooking' },
     { name: 'Contact Us', path: '/contact' },
     { name: 'Blog', path: '/blog' },
