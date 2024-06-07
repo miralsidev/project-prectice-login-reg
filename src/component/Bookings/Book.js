@@ -32,7 +32,7 @@ const Book = () => {
     }, []);
 
     const carData = location.state.car;
-    console.log("cars data====", carData);
+
 
     useEffect(() => {
         if (pickupDate && returnDate) {
@@ -42,9 +42,9 @@ const Book = () => {
             setDuration(null);
         }
     }, [pickupDate, returnDate]);
-    console.log("durationduration=",duration);
+
     let price = carData?.price * duration;
-    console.log("--price--",price);
+
     const hasFormSubmit = async (values, { resetForm }) => {
         try {
             const res = await BookingServices({
@@ -59,7 +59,7 @@ const Book = () => {
                 price:price
             });
             const data = res.data;
-            console.log(res.data.message, "res.data ======");
+
             if (data.status === 400) {
                 toast.error(data.message || 'Something Went Wrong');
             } else if (data.status === 500) {
