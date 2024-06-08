@@ -1,5 +1,5 @@
 
-import * as yup from 'yup';
+
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Paper, TextField, Button } from '@mui/material';
@@ -10,12 +10,15 @@ import { Box, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { BookingServices } from '../../Servicer/Booking';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate  } from 'react-router-dom';
 import dayjs from 'dayjs';
+
+
 
 const Book = () => {
     const location = useLocation();
     const [userName, setUserName] = useState('');
+    const navigate = useNavigate();
     const [pickupDate, setPickupDate] = useState(null);
     const [returnDate, setReturnDate] = useState(null);
     const [duration, setDuration] = useState(null);
@@ -32,7 +35,7 @@ const Book = () => {
     }, []);
 
     const carData = location.state.car;
-
+    console.log("car-- data ===",carData);
 
     useEffect(() => {
         if (pickupDate && returnDate) {
@@ -59,6 +62,7 @@ const Book = () => {
                 price: price
             });
             const data = res.data;
+            console.log("-[-res--",res);
 
             if (data.status === 400) {
                 toast.error(data.message || 'Something Went Wrong');
@@ -66,6 +70,8 @@ const Book = () => {
                 toast.error(data.message || 'Internal server error.');
             } else if (data.status === 200) {
                 toast.success(data.message || 'Booking Successfully..!!');
+                navigate('/payment', { state: { carData, price ,      pickupDate: dayjs(pickupDate).format('YYYY-MM-DD'), 
+                    returnDate: dayjs(returnDate).format('YYYY-MM-DD') ,bookingId:res.data.data._id} });
             } else {
                 toast.error('An unexpected error occurred.');
             }
@@ -78,14 +84,13 @@ const Book = () => {
     };
 
     return (
-        <div className=''>
+        <>
             <Formik
                 initialValues={{
                     pickup_Location: '',
                     dropoff_Location: '',
                     pickup_time: '',
                     return_time: '',
-
                 }}
                 onSubmit={hasFormSubmit}
             >
@@ -131,7 +136,7 @@ const Book = () => {
                                     <ErrorMessage name='return_date' />
                                     {duration !== null && (
                                         <Typography textAlign={"center"} sx={{ color: 'Black' }}>
-                                            {duration} day{duration !== 1 && 's'} selected Total {price}
+                                            {duration} day{duration !== 1 && 's'} selected Total Payment {price}    
                                             
                                         </Typography>
                                    
@@ -140,8 +145,8 @@ const Book = () => {
                                     <ErrorMessage name='pickup_time' />
                                     <Field as={TextField} name="return_time" label="Return Time" sx={{ marginBottom: '5px' }} />
                                     <ErrorMessage name='return_time' />
-                                    <Button type="submit" style={{ background: '#6D4A56', color: 'white' }}>
-                                        Payment Now
+                                    <Button type="submit" style={{ background: '#6D4A56', color: 'white' }} >
+                                        Rent Now
                                     </Button>
                                     <ToastContainer />
                                 </div>
@@ -150,7 +155,7 @@ const Book = () => {
                     </div>
                 </div>
             </Formik>
-        </div>
+        </>
     );
 }
 

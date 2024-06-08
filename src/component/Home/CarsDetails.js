@@ -13,6 +13,7 @@ const CarsDetails = ({ show, cars, handleClose }) => {
   const navigate = useNavigate();
 
   const handleSubmit = (car) => {
+    console.log("==carcar==",car);
     navigate(`/book/${car._id}`, { state: { car: car } });
   }
   return (
