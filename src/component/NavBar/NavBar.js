@@ -16,14 +16,14 @@ import { Link } from 'react-router-dom';
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 const pages = [
     { name: 'Home', path: '/' },
-    { name: 'MyBooking', path: '/mybooking' },
     { name: 'Contact Us', path: '/contact' },
     { name: 'Blog', path: '/blog' },
     { name: 'Login', path: '/login' }
 ];
 const settings = [
     { name: 'Profile', path: '/Profile' },
-    { name: 'Logout', path: '/logout' }
+    { name: 'Logout', path: '/logout' },
+    { name: 'MyBooking', path: '/mybooking' }
 ];
 function NavBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);

@@ -8,14 +8,14 @@ import { IndianRupee } from 'lucide-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
 
-
 const CarsDetails = ({ show, cars, handleClose }) => {
   const navigate = useNavigate();
-
   const handleSubmit = (car) => {
     console.log("==carcar==",car);
     navigate(`/book/${car._id}`, { state: { car: car } });
   }
+  const token = localStorage.getItem('token');
+  console.log("token -- ", token);
   return (
     <>
       <Modal
@@ -50,14 +50,13 @@ const CarsDetails = ({ show, cars, handleClose }) => {
             <div className="price-container ps-4">
               <p><span style={{ color: 'blue' }}><IndianRupee />{cars.price}</span> / Per Day</p>
               {console.log("==================cars id ==", cars)}
-              
+            
               <button type="button" className="btn btn-primary" onClick={() => handleSubmit(cars)} >Book Now</button>
             </div>
           </div>
         </Modal.Body>
       </Modal>
     </>
-
   );
 };
 export default CarsDetails;
