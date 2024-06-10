@@ -79,8 +79,8 @@ const Contact = () => {
                     </div>
                 </div>
             </div>
-            <div className='d-flex justify-content-center mt-5'>
-                <div className='w-50'>
+            <div className='row mt-5 justify-content-center'>
+                <div className='col-12   col-lg-8 col-xl-6'>
                     <MapComponent />
                 </div>
             </div>

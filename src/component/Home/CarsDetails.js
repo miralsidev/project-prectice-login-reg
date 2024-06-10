@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const CarsDetails = ({ show, cars, handleClose }) => {
   const navigate = useNavigate();
   const handleSubmit = (car) => {
-    console.log("==carcar==",car);
+    console.log("==carcar==", car);
     navigate(`/book/${car._id}`, { state: { car: car } });
   }
   const token = localStorage.getItem('token');
@@ -37,23 +37,41 @@ const CarsDetails = ({ show, cars, handleClose }) => {
                 className="img-fluid"
               />
               <p className="fs-1">{cars.brand}</p>
+     
+
+                <table className="table h5">
+                  <tr>
+                    <td><span><FaUserLarge /></span> Passengers</td>
+                    <td>{cars.seats}</td>
+                  </tr>
+                  <tr>
+                    <td><span><MdLuggage /> </span>  Luggage</td>
+                    <td>{cars.luggage}</td>
+                  </tr>
+                  <tr>
+                    <td><span><TbAirConditioningDisabled /></span> Air Condition</td>
+                    <td> {cars.Air_Conditioning_Availability}</td>
+                  </tr>
+                  <tr>
+                    <td><span><LuFuel /></span> Fuel</td>
+                    <td>{cars.fuel}</td>
+                  </tr>
+                </table>
+                <div className='ps-3'>
+                <p>Limited Mileage: {cars.mileage}</p>
+                <p>{cars.description}</p>
+                </div>
+              
+                <div className="price-container ps-3 h5">
+                  <p><span style={{ color: 'blue' }}><IndianRupee />{cars.price}</span> / rent per Day</p>
+                  {console.log("==================cars id ==", cars)}
+
+                  <button type="button" className="btn btn-primary" onClick={() => handleSubmit(cars)} >Book Now</button>
+                </div>
+              </div>
             </div>
-            <div className="details-container ps-5">
-              <h5 className="card-title fs-2">{cars.model}</h5>
-              <p>Limited Mileage: {cars.mileage}</p>
-              <p>{cars.description}</p>
-              <p><LuFuel /> {cars.fuel}</p>
-              <p><TbAirConditioningDisabled /> {cars.Air_Conditioning_Availability}</p>
-              <p><MdLuggage /> {cars.luggage}</p>
-              <p><FaUserLarge /> {cars.seats}</p>
-            </div>
-            <div className="price-container ps-4">
-              <p><span style={{ color: 'blue' }}><IndianRupee />{cars.price}</span> / Per Day</p>
-              {console.log("==================cars id ==", cars)}
-            
-              <button type="button" className="btn btn-primary" onClick={() => handleSubmit(cars)} >Book Now</button>
-            </div>
-          </div>
+
+    
         </Modal.Body>
       </Modal>
     </>

@@ -159,48 +159,51 @@ function Home() {
           </Box>
         </div>
       </div>
-      <div >
+      <div className='container' >
         {console.log("cars ==", cars)}
         {cars ? (
-          <div className='row gap-4 w-100 d-flex justify-content-center col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-12'>
+          <div className='row g-4 w-100 '>
             {cars.map((car, index) => (
+              <div className='col-xl-3'>
 
-              <div className="card " style={{ maxWidth: "25rem" }} key={index}>
-                {/* rgb(224 201 206)   background:'#86535D'*/}
-                {console.log(`http://localhost:5000/${car?.path}`)}
-                <img
-                  src={`http://localhost:5000/${car.path}`}
-                  alt={`car-${index}`}
-                  style={{ width: "100%", height: "100%" }}
-                /><hr />
-                <div className="card-body">
-                  <h5 className="card-title">{car.model}</h5>
-                  <p style={FontStyle}><span style={{ color: 'blue' }}><IndianRupee />{car.price}</span>Per Day</p>
+                <div className=" p-0 car-box " style={{ maxWidth: "25rem" }} key={index}>
+                  {/* rgb(224 201 206)   background:'#86535D'*/}
+                  {console.log(`http://localhost:5000/${car?.path}`)}
+                  <img
+                    src={`http://localhost:5000/${car.path}`}
+                    alt={`car-${index}`}
+                    style={{ width: "100%" }}
+                  /><hr />
+                  <div className="card-body">
+                    <h5 className="card-title">{car.model}</h5>
+                    <p style={FontStyle}><span style={{ color: 'blue' }}><IndianRupee />{car.price}</span>Per Day</p>
 
-                </div>
-                <div className='d-flex justify-content-center'>
-                  <div className='border d-flex justify-content-around' style={{ width: '500px' }}>
-                    <div className='mt-3'>
-                      <BsFillFuelPumpDieselFill className='fs-2' />
-                      <p style={FontStyle}>{car.fuel}</p>
-                    </div>
-                    <div className='mt-3'>
-                      <MdOutlineAirlineSeatReclineExtra className='fs-2' />
-                      <p style={FontStyle}>{car.seats}</p>
-                    </div>
-                    <div className='mt-3'>
-                      <TbAirConditioningDisabled className='fs-2' />
-                      <p style={FontStyle}>{car.Air_Conditioning_Availability}</p>
+                  </div>
+                  <div className='d-flex justify-content-center'>
+                    <div className='border d-flex justify-content-around' style={{ width: '500px' }}>
+                      <div className='mt-3'>
+                        <BsFillFuelPumpDieselFill className='fs-2' />
+                        <p style={FontStyle}>{car.fuel}</p>
+                      </div>
+                      <div className='mt-3'>
+                        <MdOutlineAirlineSeatReclineExtra className='fs-2' />
+                        <p style={FontStyle}>{car.seats}</p>
+                      </div>
+                      <div className='mt-3'>
+                        <TbAirConditioningDisabled className='fs-2' />
+                        <p style={FontStyle}>{car.Air_Conditioning_Availability}</p>
+                      </div>
+
                     </div>
 
                   </div>
 
-                </div>
-
-                <div className="card-body d-flex justify-content-center">
-                  <Button variant="contained" style={{ backgroundColor: '#6D4A56' }} onClick={() => handleShow(car)} className='w-100'>Views Details</Button>
+                  <div className="card-body d-flex justify-content-center">
+                    <Button variant="contained" style={{ backgroundColor: '#6D4A56' }} onClick={() => handleShow(car)} className='w-100'>Views Details</Button>
+                  </div>
                 </div>
               </div>
+
             ))}
           </div>
 
